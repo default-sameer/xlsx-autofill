@@ -1,0 +1,21 @@
+{
+  "name": "first-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsc && node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "typescript": "^5.0.3"
+  },
+  "dependencies": {
+    "@clack/core": "^0.3.2",
+    "@clack/prompts": "^0.6.3",
+    "@types/uuid": "^9.0.1",
+    "exceljs": "^4.3.0",
+    "picocolors": "^1.0.0",
+    "uuid": "^9.0.0"
+  }
+}
