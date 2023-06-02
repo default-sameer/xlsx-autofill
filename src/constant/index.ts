@@ -30,15 +30,3 @@ export const UOM = [
 ];
 
 export const CURRENCY = ["USD", "GBP", "AUD", "INR"];
-
-export const Pricing = ["Enterprise", "Platinum", "Gold", "Silver"];
-
-export const Options = ["Option 1", "Option 2", "Option 3", "Option 4"];
-
-//Dropdown options with different subtcatagories like if we select weight then we have to show all the options related to weight
-export const DROPDOWN_OPTIONS = {
-  uom: UOM,
-  currency: CURRENCY,
-  pricing: Pricing,
-  options: Options,
-};

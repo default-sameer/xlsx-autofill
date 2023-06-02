@@ -1,4 +1,11 @@
-import { intro, outro, select, text } from "@clack/prompts";
+import {
+  intro,
+  outro,
+  select,
+  cancel,
+  isCancel,
+  spinner,
+} from "@clack/prompts";
 import { DATA_TYPE } from "./constant";
 import { generateXLSXFile } from "./utils/generateXlsx";
 import { FileInput } from "./types";
@@ -7,6 +14,7 @@ import { askNumRows, getHeaders } from "./utils/getheaders";
 import pc from "picocolors";
 
 async function run() {
+  const s = spinner();
   intro(
     pc.green(
       "Welcome, Add Product or Service Configuration to generate xlsx file"
@@ -28,28 +36,40 @@ async function run() {
       },
     ],
   });
+  if (isCancel(option)) {
+    return cancel(pc.red("Operation Cancelled"));
+  }
 
   if (option === "Product") {
-    const headers = await getHeaders();
-    const number = await askNumRows();
-    const input: FileInput = {
-      headers: headers.map((header) => ({
-        name: header.name,
-        dataType: header.type as DATA_TYPE,
-      })),
-    };
-    await generateXLSXFile(input, "Product", number);
+    const headers = await getHeaders(option);
+    if (headers) {
+      const number = await askNumRows();
+      const input: FileInput = {
+        headers: headers.map((header) => ({
+          name: header.name,
+          dataType: header.type as DATA_TYPE,
+          option: header?.options,
+        })),
+      };
+      s.start("Generating Product XLSX file");
+      await generateXLSXFile(input, "Product", number);
+      s.stop("Product XLSX file generated");
+    }
   } else if (option === "Service") {
-    const headers = await getHeaders();
-    const number = await askNumRows();
-    const input: FileInput = {
-      headers: headers.map((header) => ({
-        name: header.name,
-        dataType: header.type as DATA_TYPE,
-        option: header?.options,
-      })),
-    };
-    await generateXLSXFile(input, "Service", number);
+    const headers = await getHeaders(option);
+    if (headers) {
+      const number = await askNumRows();
+      const input: FileInput = {
+        headers: headers.map((header) => ({
+          name: header.name,
+          dataType: header.type as DATA_TYPE,
+          option: header?.options,
+        })),
+      };
+      s.start("Generating Service XLSX file");
+      await generateXLSXFile(input, "Service", number);
+      s.stop("Service XLSX file generated");
+    }
   }
 
   outro("Configuration completed.");
