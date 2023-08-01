@@ -3,11 +3,10 @@ import { Workbook, Worksheet } from "exceljs";
 import { v4 as uuidv4 } from "uuid";
 import { Header } from "../types";
 import { CURRENCY, DATA_TYPE, UOM } from "../constant";
-import { randomDate } from "./data";
+import { cars, randomDate } from "./data";
 
 export function generateString(length: number) {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let result = " ";
   const charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
@@ -17,9 +16,9 @@ export function generateString(length: number) {
   return result;
 }
 
-export function getRandomValue(index: number, values: any[]) {
+export const getRandomValue = (index: number, values: any[]) => {
   return values[Math.floor(index % values.length)];
-}
+};
 
 export const generateXLSXFile = async (
   input: FileInput,
@@ -61,7 +60,7 @@ export const generateXLSXFile = async (
 export const getValues = (index: number, header: Header, option: string[]) => {
   switch (header.dataType) {
     case DATA_TYPE.text:
-      return generateString(10);
+      return getRandomValue(index, cars);
     case DATA_TYPE.number:
       return Math.floor(Math.random() * 100) + 1;
     case DATA_TYPE.dropdown:

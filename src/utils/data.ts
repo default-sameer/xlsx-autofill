@@ -1,4 +1,4 @@
-const cars = [
+export const cars = [
   "Chevrolet",
   "Ford",
   "Tesla",
